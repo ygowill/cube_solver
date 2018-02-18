@@ -4,7 +4,7 @@
 using namespace cv;
 using namespace std;
 
-void colorReduce(const Mat& src,Mat& dst,int K=64){
+/*void colorReduce(const Mat& src,Mat& dst,int K=64){
     int n = src.rows * src.cols;
     Mat data = src.reshape(1, n);
     data.convertTo(data, CV_32F);
@@ -19,7 +19,7 @@ void colorReduce(const Mat& src,Mat& dst,int K=64){
     }
     Mat reduced = data.reshape(3, src.rows);
     reduced.convertTo(dst, CV_8U);
-}
+}*/
 
 static void drawSquares( Mat& image, const vector<vector<Point> >& squares ){
     for( size_t i = 0; i < squares.size(); i++ ){
@@ -28,14 +28,10 @@ static void drawSquares( Mat& image, const vector<vector<Point> >& squares ){
         int shift = 1;
 
         Rect r=boundingRect( Mat(squares[i]));
-        r.x = r.x + r.width / 4;
-        r.y = r.y + r.height / 4;
-        r.width = r.width / 2;
-        r.height = r.height / 2;
-
         Mat roi = image(r);
         Scalar color = mean(roi);
-        polylines(image, &p, &n, 1, true, color, 2, LINE_AA, shift);
+        polylines(image, &p, &n, 1, true, Scalar(0,0,0), 2, LINE_AA, shift);
+        fillPoly(image, &p, &n, 1, color, 8,shift);
     }
 }
 
@@ -46,16 +42,25 @@ static void findSquares( const Mat& image, vector<vector<Point> >& squares , boo
     Mat gray,gray0,color_gray,image_clone,reduced;
     vector<vector<Point> > contours;
 
+    vector<Vec4i> lines;
+    //Point point1, point2;
     //use k-means to do color quantization
     /*cvtColor(image,image_clone,COLOR_BGR2HSV);
     colorReduce(image_clone,reduced,32);
     imshow("color reduce result",reduced);*/
     cvtColor(image,gray0,COLOR_BGR2GRAY);
-    GaussianBlur(gray0, gray0, Size(11,11), 0, 0);
+    GaussianBlur(gray0, gray0, Size(7,7), 0, 0);
+
     //pyrMeanShiftFiltering(image,image,spatialRad,colorRad,maxPryLevel);
     //cvtColor(image,gray0,COLOR_BGR2GRAY);
     Canny(gray0,gray, 0, 30, 3);
+    /*HoughLinesP(gray,lines,1,CV_PI/180,35,35,15);
 
+    for (size_t i = 0; i < lines.size(); i++){
+        point1 = Point(lines[i][0], lines[i][1]);
+        point2 = Point(lines[i][2], lines[i][3]);
+        line(image, point1, point2, Scalar(255, 255, 255), 3 , CV_AA);
+    }*/
     imshow("canny result",gray);
 
     // find contours and store them all as a list
@@ -67,7 +72,7 @@ static void findSquares( const Mat& image, vector<vector<Point> >& squares , boo
     for( size_t i = 0; i < contours.size(); i++ ){
         // approximate contour with accuracy proportional
         // to the contour perimeter
-        approxPolyDP(Mat(contours[i]), approx, 9, true);
+        approxPolyDP(Mat(contours[i]), approx, 12, true);
 
         // square contours should have 4 vertices after approximation
         // relatively large area (to filter out noisy contours)
@@ -104,5 +109,4 @@ int main(){
         imshow("Rubic Detection Demo", frame);
         waitKey(1);
     }
-    return 0;
 }
