@@ -586,7 +586,7 @@ int main(){
     Mat roi_down = down_image(Rect(0,0,PICSIZE,PICSIZE));
     imshow("roi down",roi_down);
     printf("processing done...\n");
-    waitKey(600000);
+    waitKey(300000);
 
     //TODO color quantization and store
     //TODO add another camera data and build the whole cube
