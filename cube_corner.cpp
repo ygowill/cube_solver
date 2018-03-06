@@ -1,14 +1,11 @@
 #include "cube_corner.h"
 
-using namespace std;
-using namespace cv;
-
-void findFrontCorner(vector<vector<Point> >& squares, vector<array<Point2f,CUBESHAPE> >& corners){
-    Point2f top_left;
-    Point2f top_right;
-    Point2f down_left;
-    Point2f down_right;
-    array<Point2f,CUBESHAPE> tmpCorners;
+void findFrontCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
+    cv::Point2f top_left;
+    cv::Point2f top_right;
+    cv::Point2f down_left;
+    cv::Point2f down_right;
+    std::array<cv::Point2f,CUBESHAPE> tmpCorners;
 
     for(int i=0;i<squares.size();i++){
         top_left=squares[i][0];
@@ -60,12 +57,12 @@ void findFrontCorner(vector<vector<Point> >& squares, vector<array<Point2f,CUBES
     }
 }
 
-void findRightCorner(vector<vector<Point> >& squares, vector<array<Point2f,CUBESHAPE> >& corners){
-    Point2f top_left;
-    Point2f top_right;
-    Point2f down_left;
-    Point2f down_right;
-    array<Point2f,CUBESHAPE> tmpCorners;
+void findRightCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
+    cv::Point2f top_left;
+    cv::Point2f top_right;
+    cv::Point2f down_left;
+    cv::Point2f down_right;
+    std::array<cv::Point2f,CUBESHAPE> tmpCorners;
 
     for(int i=0;i<squares.size();i++){
         top_left=squares[i][0];
@@ -117,12 +114,12 @@ void findRightCorner(vector<vector<Point> >& squares, vector<array<Point2f,CUBES
     }
 }
 
-void findDownCorner(vector< vector<Point> >& squares, vector<array<Point2f,CUBESHAPE> >& corners){
-    Point2f top_left;
-    Point2f top_right;
-    Point2f down_left;
-    Point2f down_right;
-    array<Point2f,CUBESHAPE> tmpCorners;
+void findDownCorner(std::vector< std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
+    cv::Point2f top_left;
+    cv::Point2f top_right;
+    cv::Point2f down_left;
+    cv::Point2f down_right;
+    std::array<cv::Point2f,CUBESHAPE> tmpCorners;
 
     for(int i=0;i<squares.size();i++){
         top_left=squares[i][0];

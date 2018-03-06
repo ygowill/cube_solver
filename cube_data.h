@@ -1,3 +1,7 @@
+#pragma once
+
+#include "opencv2/imgproc.hpp"
+#include "opencv2/highgui.hpp"
 const int MAXRANGE = 1000;
 const int MAXTAN = 3;
 const int PICSIZE = 200;
@@ -18,12 +22,12 @@ const int DOWN_DISTANCE_COMPENSATION_Y = 5;
 const int DOWN_DISTANCE_COMPENSATION_XY_X = 5;
 const int DOWN_DISTANCE_COMPENSATION_XY_Y = -25;
 
-std::vector<std::vector<cv::Point> > front_squares;
-std::array<cv::Point2f,CUBESHAPE> front_corner;
-std::vector<std::array<cv::Point2f,CUBESHAPE> > f_corners;
-std::vector<std::vector<cv::Point> > down_squares;
-std::array<cv::Point2f,CUBESHAPE> down_corner;
-std::vector<std::array<cv::Point2f,CUBESHAPE> > d_corners;
-std::vector<std::vector<cv::Point> > right_squares;
-std::array<cv::Point2f,CUBESHAPE> right_corner;
-std::vector<std::array<cv::Point2f,CUBESHAPE> > r_corners;
+extern std::vector<std::vector<cv::Point> > front_squares;
+extern std::array<cv::Point2f,CUBESHAPE> front_corner;
+extern std::vector<std::array<cv::Point2f,CUBESHAPE> > f_corners;
+extern std::vector<std::vector<cv::Point> > down_squares;
+extern std::array<cv::Point2f,CUBESHAPE> down_corner;
+extern std::vector<std::array<cv::Point2f,CUBESHAPE> > d_corners;
+extern std::vector<std::vector<cv::Point> > right_squares;
+extern std::array<cv::Point2f,CUBESHAPE> right_corner;
+extern std::vector<std::array<cv::Point2f,CUBESHAPE> > r_corners;

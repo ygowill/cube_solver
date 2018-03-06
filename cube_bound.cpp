@@ -1,9 +1,6 @@
 #include "cube_bound.h"
 
-using namespace std;
-using namespace cv;
-
-void number_signal(Point2f src,Point2f dst,int sig[]){
+void number_signal(cv::Point2f src,cv::Point2f dst,int sig[]){
     if(dst.x >= src.x){
         sig[0]=1;
     }
@@ -18,7 +15,7 @@ void number_signal(Point2f src,Point2f dst,int sig[]){
     }
 }
 
-void findBound(vector<array<Point2f,CUBESHAPE> >& corners,array<Point2f,CUBESHAPE>& bounds,int mode){
+void findBound(std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners,std::array<cv::Point2f,CUBESHAPE>& bounds,int mode){
     int core_square_index=0;
     switch(mode){
         case 3:findFrontKeyBlock(corners,core_square_index);
@@ -30,7 +27,7 @@ void findBound(vector<array<Point2f,CUBESHAPE> >& corners,array<Point2f,CUBESHAP
         default: exit(0);
     }
 
-    Point2f keyCorner[4];
+    cv::Point2f keyCorner[4];
     for(int i=0;i<4;i++){
         keyCorner[i]=corners.at((unsigned long)core_square_index)[i];
     }

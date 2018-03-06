@@ -1,9 +1,8 @@
 #include "cube_squares.h"
 
-using namespace std;
 using namespace cv;
 
-static void drawSquares( Mat& image, const vector<vector<Point> >& squares ){
+void drawSquares( Mat& image, const std::vector<std::vector<Point> >& squares ){
     for( size_t i = 0; i < squares.size(); i++ ){
         const Point* p = &squares[i][0];
         int n = (int)squares[i].size();
@@ -19,12 +18,12 @@ static void drawSquares( Mat& image, const vector<vector<Point> >& squares ){
 
 // returns sequence of squares detected on the image.
 // the sequence is stored in the specified memory storage
-static void findSquares( const Mat& image, vector<vector<Point> >& squares){
+void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
     squares.clear();
     Mat gray,gray0,color_gray,image_clone,reduced;
-    vector<vector<Point> > contours;
+    std::vector<std::vector<Point> > contours;
 
-    vector<Vec4i> lines;
+    std::vector<Vec4i> lines;
     //Point point1, point2;
     //use k-means to do color quantization
     /*cvtColor(image,image_clone,COLOR_BGR2HSV);
@@ -48,7 +47,7 @@ static void findSquares( const Mat& image, vector<vector<Point> >& squares){
     // find contours and store them all as a list
     findContours(gray, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
 
-    vector<Point> approx;
+    std::vector<Point> approx;
 
     // test each contour
     for( size_t i = 0; i < contours.size(); i++ ){
@@ -126,7 +125,7 @@ static void findSquares( const Mat& image, vector<vector<Point> >& squares){
     }
 }
 
-bool checkExist(vector<Point>& square, vector<vector<Point> >& exist_squares,int maxRange){
+bool checkExist(std::vector<Point>& square, std::vector<std::vector<Point> >& exist_squares,int maxRange){
     float core_x=0,core_y=0,tmp_core_x=0,tmp_core_y=0;
 
     // calculate the position of the input square's core

@@ -1,8 +1,5 @@
 #include "color_operation.h"
 
-using namespace std;
-using namespace cv;
-
 /*void colorReduce(const Mat& src,Mat& dst,int K=64){
     int n = src.rows * src.cols;
     Mat data = src.reshape(1, n);
@@ -20,13 +17,13 @@ using namespace cv;
     reduced.convertTo(dst, CV_8U);
 }*/
 
-void cube_color_reduce(Mat& src, Mat& dst){
+void cube_color_reduce(cv::Mat& src, cv::Mat& dst){
 
 }
 
-void my_kmeans(Mat& src,Mat& dst,int clusterCount,int attempts){
+void my_kmeans(cv::Mat& src, cv::Mat& dst,int clusterCount,int attempts){
     //step 1 : map the src to the samples
-    Mat samples(src.total(), 3, CV_32F);
+    cv::Mat samples(src.total(), 3, CV_32F);
     auto samples_ptr = samples.ptr<float>(0);
     for( int row = 0; row != src.rows; ++row){
         auto src_begin = src.ptr<uchar>(row);
@@ -41,15 +38,15 @@ void my_kmeans(Mat& src,Mat& dst,int clusterCount,int attempts){
     }
 
     //step 2 : apply kmeans to find labels and centers
-    Mat labels;
-    Mat centers;
+    cv::Mat labels;
+    cv::Mat centers;
     kmeans(samples, clusterCount, labels,
            cv::TermCriteria(CV_TERMCRIT_ITER | CV_TERMCRIT_EPS,
                             10, 0.01),
            attempts, cv::KMEANS_PP_CENTERS, centers);
 
     //step 3 : map the centers to the output
-    Mat new_image(src.size(), src.type());
+    cv::Mat new_image(src.size(), src.type());
     for( int row = 0; row != src.rows; ++row){
         auto new_image_begin = new_image.ptr<uchar>(row);
         auto new_image_end = new_image_begin + new_image.cols * 3;

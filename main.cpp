@@ -8,6 +8,16 @@
 using namespace cv;
 using namespace std;
 
+std::vector<std::vector<cv::Point> > front_squares;
+std::array<cv::Point2f,CUBESHAPE> front_corner;
+std::vector<std::array<cv::Point2f,CUBESHAPE> > f_corners;
+std::vector<std::vector<cv::Point> > down_squares;
+std::array<cv::Point2f,CUBESHAPE> down_corner;
+std::vector<std::array<cv::Point2f,CUBESHAPE> > d_corners;
+std::vector<std::vector<cv::Point> > right_squares;
+std::array<cv::Point2f,CUBESHAPE> right_corner;
+std::vector<std::array<cv::Point2f,CUBESHAPE> > r_corners;
+
 int main(){
     //VideoCapture cap(1); // open webcam
 
