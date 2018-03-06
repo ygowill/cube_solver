@@ -134,7 +134,7 @@ int main(){
     imshow("kmeans down",kmeans_down);
 
 
-    waitKey(400000);
+    waitKey(300000);
 
     return 0;
 }
