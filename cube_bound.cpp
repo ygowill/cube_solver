@@ -76,6 +76,5 @@ void findBound(std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners,std::arr
             bounds[2].x=bounds[0].x+bounds[3].x-keyCorner[1].x+DOWN_DISTANCE_COMPENSATION_XY_X;
             bounds[2].y=bounds[0].y+bounds[3].y-keyCorner[1].y+DOWN_DISTANCE_COMPENSATION_XY_Y;
             break;
-        default:exit(0);
     }
 }

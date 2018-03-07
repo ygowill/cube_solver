@@ -1,23 +1,42 @@
 #include "color_operation.h"
 
-/*void colorReduce(const Mat& src,Mat& dst,int K=64){
-    int n = src.rows * src.cols;
-    Mat data = src.reshape(1, n);
-    data.convertTo(data, CV_32F);
-
-    vector<int> labels;
-    Mat1f colors;
-    kmeans(data, K, labels, TermCriteria(), 1, KMEANS_PP_CENTERS, colors);
-    for (int i = 0; i < n; ++i){
-        data.at<float>(i, 0) = colors(labels[i], 0);
-        data.at<float>(i, 1) = colors(labels[i], 1);
-        data.at<float>(i, 2) = colors(labels[i], 2);
-    }
-    Mat reduced = data.reshape(3, src.rows);
-    reduced.convertTo(dst, CV_8U);
-}*/
+using namespace cv;
 
 void cube_color_reduce(cv::Mat& src, cv::Mat& dst){
+    std::vector<Mat > channels;
+    Mat hsv_img;
+    cvtColor(src,hsv_img,COLOR_BGR2HSV);
+    MatIterator_<Vec3b> colorit, colorend;
+    for(colorit = hsv_img.begin<Vec3b>(), colorend = hsv_img.end<Vec3b>(); colorit != colorend; ++colorit){
+        //detect color and set hue value
+        if(((*colorit)[0]>=0 && (*colorit)[0]<=9) || ((*colorit)[0]>=151 && (*colorit)[0]<=180)){
+            (*colorit)[0]=RED;
+        }
+        else if((*colorit)[0]>=10 && (*colorit)[0]<=19){
+            (*colorit)[0]=ORANGE;
+        }
+        else if((*colorit)[0]>=20 && (*colorit)[0]<=45){
+            (*colorit)[0]=YELLOW;
+        }
+        else if((*colorit)[0]>=46 && (*colorit)[0]<=100){
+            (*colorit)[0]=GREEN;
+        }
+        else{
+            (*colorit)[0]=BLUE;
+        }
+
+        //detect white and set the saturation value
+        if(((*colorit)[1]>=0 && (*colorit)[1]<=15) && ((*colorit)[2]>=235 && (*colorit)[2]<=255)){
+            (*colorit)[1]=WHITE_S;
+        }
+        else{
+            (*colorit)[1]=255;
+        }
+
+        //set the brightness value
+        //(*colorit)[2]=128;
+    }
+    cvtColor(hsv_img,dst,COLOR_HSV2BGR);
 
 }
 
@@ -62,4 +81,59 @@ void my_kmeans(cv::Mat& src, cv::Mat& dst,int clusterCount,int attempts){
         }
     }
     dst = new_image;
+}
+
+void get_cube_color(Mat& roi,std::array<char, BLOCKSIZE> color){
+    for(int i=0;i<CUBESHAPE;i++){
+        for(int j=0;j<CUBESHAPE;j++){
+            Mat tmp_roi=roi(Rect(j*STICKERSIZE,i*STICKERSIZE,STICKERSIZE,STICKERSIZE));
+            color[i*CUBESHAPE+j]=get_block_color(tmp_roi);
+            printf("%c  ",color[i*CUBESHAPE+j]);
+        }
+        printf("\n");
+    }
+}
+
+char get_block_color(Mat& roi){
+    //imshow("roi",roi);
+    Mat src,channels[3],hist;
+    cvtColor(roi,src,COLOR_BGR2HSV);
+    split(src,channels);
+
+    //calculate the s channel to decide if the domain color is white
+    int sSize = 2;
+    float sranges[] = { 0,255 };
+    const float* psranges = sranges;
+    calcHist(&channels[1], 1, 0, Mat(), hist, 1, &sSize, &psranges);
+    normalize(hist, hist, 0, 255, NORM_MINMAX);
+    //printf("********\n%d  %d\n********\n",saturate_cast<int>(hist.at<float>(0)),saturate_cast<int>(hist.at<float>(1)));
+    if(saturate_cast<int>(hist.at<float>(0)) > saturate_cast<int>(hist.at<float>(1))){
+        return 'W';
+    }
+
+    //calculate the h channel to decide the rest colors
+    int hsize = 18;
+    float hranges[] = { 0,180 };
+    const float* phranges = hranges;
+    calcHist(&channels[0], 1, 0, Mat(), hist, 1, &hsize, &phranges);
+    normalize(hist, hist, 0, 255, NORM_MINMAX);
+
+    int maxVal=saturate_cast<int>(hist.at<float>(0));
+    int loc=0;
+    for (int i = 1; i < hsize; i++){
+        int val = saturate_cast<int>(hist.at<float>(i));
+        if(val>maxVal){
+            loc = i;
+            maxVal = val;
+        }
+    }
+
+    switch (loc){
+        case 0:return 'R';
+        case 1:return 'O';
+        case 3:return 'Y';
+        case 7:return 'G';
+        case 12:return 'B';
+        default: return 'W';
+    }
 }

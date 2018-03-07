@@ -42,7 +42,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
         point2 = Point(lines[i][2], lines[i][3]);
         line(image, point1, point2, Scalar(255, 255, 255), 3 , CV_AA);
     }*/
-    imshow("canny result",gray);
+    //imshow("canny result",gray);
 
     // find contours and store them all as a list
     findContours(gray, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);

@@ -11,12 +11,15 @@ using namespace std;
 std::vector<std::vector<cv::Point> > front_squares;
 std::array<cv::Point2f,CUBESHAPE> front_corner;
 std::vector<std::array<cv::Point2f,CUBESHAPE> > f_corners;
+std::array<char, BLOCKSIZE>f_stickers;
 std::vector<std::vector<cv::Point> > down_squares;
 std::array<cv::Point2f,CUBESHAPE> down_corner;
 std::vector<std::array<cv::Point2f,CUBESHAPE> > d_corners;
+std::array<char, BLOCKSIZE>d_stickers;
 std::vector<std::vector<cv::Point> > right_squares;
 std::array<cv::Point2f,CUBESHAPE> right_corner;
 std::vector<std::array<cv::Point2f,CUBESHAPE> > r_corners;
+std::array<char, BLOCKSIZE>r_stickers;
 
 int main(){
     //VideoCapture cap(1); // open webcam
@@ -102,19 +105,15 @@ int main(){
     Mat right_image;
     warpPerspective(mean_frame,right_image,right_m,mean_frame.size());
     Mat roi_right = right_image(Rect(0,0,PICSIZE,PICSIZE));
-    imshow("roi right",roi_right);
+    //imshow("roi right",roi_right);
     Mat down_m = getPerspectiveTransform(down_corner.data(),pts_dst);
     Mat down_image;
     warpPerspective(mean_frame,down_image,down_m,mean_frame.size());
     Mat roi_down = down_image(Rect(0,0,PICSIZE,PICSIZE));
-    imshow("roi down",roi_down);
+    //imshow("roi down",roi_down);
     printf("processing done...\n");
 
-    //TODO color quantization and store
-    //TODO add another camera data and build the whole cube
-    //TODO cube solve algorithm
-
-    for(int i=0;i<f_corners.size();i++){
+    /*for(int i=0;i<f_corners.size();i++){
         circle(frame,Point((int)f_corners[i][0].x,(int)f_corners[i][0].y),5,Scalar(255,255,255),5);
         circle(frame,Point((int)f_corners[i][1].x,(int)f_corners[i][1].y),5,Scalar(0,0,255),5);
         circle(frame,Point((int)f_corners[i][2].x,(int)f_corners[i][2].y),5,Scalar(0,255,0),5);
@@ -129,22 +128,16 @@ int main(){
         circle(frame,Point((int)d_corners[i][1].x,(int)d_corners[i][1].y),5,Scalar(0,0,255),5);
         circle(frame,Point((int)d_corners[i][2].x,(int)d_corners[i][2].y),5,Scalar(0,255,0),5);
         circle(frame,Point((int)d_corners[i][3].x,(int)d_corners[i][3].y),5,Scalar(255,0,255),5);
-    }
-    imshow("Rubik's Detection -ygowill", frame);
+    }*/
+    //imshow("Rubik's Detection -ygowill", frame);
 
-    //use kmeans to do the color quantization
-    /*Mat kmeans_right;
-    my_kmeans(roi_right,kmeans_right,7,5);
-    imshow("kmeans right",kmeans_right);
-    Mat kmeans_front;
-    my_kmeans(roi_front,kmeans_front,7,5);
-    imshow("kmeans front",kmeans_front);*/
-    Mat kmeans_down;
-    my_kmeans(roi_down,kmeans_down,7,5);
-    imshow("kmeans down",kmeans_down);
+    Mat front_color;
+    cube_color_reduce(roi_front,front_color);
+    get_cube_color(front_color,f_stickers);
+    //Mat test_roi=right_color(Rect(0,150,50,50));
+    //printf("color: %c\n",get_block_color(test_roi));
 
-
-    waitKey(300000);
-
+    waitKey(30000);
+    //TODO cube solve algorithm
     return 0;
 }
