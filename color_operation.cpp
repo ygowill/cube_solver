@@ -12,10 +12,10 @@ void cube_color_reduce(cv::Mat& src, cv::Mat& dst){
         if(((*colorit)[0]>=0 && (*colorit)[0]<=9) || ((*colorit)[0]>=151 && (*colorit)[0]<=180)){
             (*colorit)[0]=RED;
         }
-        else if((*colorit)[0]>=10 && (*colorit)[0]<=19){
+        else if((*colorit)[0]>=10 && (*colorit)[0]<=24){
             (*colorit)[0]=ORANGE;
         }
-        else if((*colorit)[0]>=20 && (*colorit)[0]<=45){
+        else if((*colorit)[0]>=25 && (*colorit)[0]<=45){
             (*colorit)[0]=YELLOW;
         }
         else if((*colorit)[0]>=46 && (*colorit)[0]<=100){
@@ -26,7 +26,7 @@ void cube_color_reduce(cv::Mat& src, cv::Mat& dst){
         }
 
         //detect white and set the saturation value
-        if(((*colorit)[1]>=0 && (*colorit)[1]<=15) && ((*colorit)[2]>=235 && (*colorit)[2]<=255)){
+        if(((*colorit)[1]>=0 && (*colorit)[1]<=10) && ((*colorit)[2]>=240 && (*colorit)[2]<=255)){
             (*colorit)[1]=WHITE_S;
         }
         else{
