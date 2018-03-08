@@ -35,7 +35,7 @@ int main(){
     //waitKey(3000);
     //cap >> mean_frame;
     frame = imread("/Users/qinkai/Desktop/cube.JPG");
-    resize(frame,frame,Size(frame.cols/2,frame.rows/2));
+    resize(frame,frame,Size(frame.cols/3,frame.rows/3));
     //printf("%d",frame.channels());
     //waitKey(10000);
     time_t start,stop;
@@ -129,7 +129,7 @@ int main(){
         circle(frame,Point((int)d_corners[i][2].x,(int)d_corners[i][2].y),5,Scalar(0,255,0),5);
         circle(frame,Point((int)d_corners[i][3].x,(int)d_corners[i][3].y),5,Scalar(255,0,255),5);
     }*/
-    //imshow("Rubik's Detection -ygowill", frame);
+    imshow("Rubik's Detection -ygowill", frame);
 
     Mat front_color;
     cube_color_reduce(roi_front,front_color);
@@ -137,7 +137,7 @@ int main(){
     //Mat test_roi=right_color(Rect(0,150,50,50));
     //printf("color: %c\n",get_block_color(test_roi));
 
-    waitKey(30000);
+    waitKey(40000);
     //TODO cube solve algorithm
     return 0;
 }
