@@ -1,9 +1,12 @@
+#include <zconf.h>
+#include <fcntl.h>
 #include "../include/cube_data.h"
 #include "../include/cube_block.h"
 #include "../include/cube_corner.h"
 #include "../include/cube_squares.h"
 #include "../include/cube_bound.h"
 #include "../include/color_operation.h"
+#include "../include/file_resolution.h"
 
 using namespace cv;
 using namespace std;
@@ -146,6 +149,23 @@ int main(){
             break;
         }
     }
-    //TODO cube solve algorithm
+
+    //TODO add another camera data and combine the two frame data together
+    string solve_input;
+    string file_path="../res/kociemba";
+    string file_name="kociemba";
+    string output="../res/sequence.txt";
+    pid_t pid = fork() ;
+    if ( pid < 0 ) {
+        return -1;
+    } else if ( pid == 0 )  { // child
+        close(STDOUT_FILENO);
+        open(output.c_str(), O_WRONLY | O_CREAT, 0600);
+        execlp(file_path.c_str(), file_name.c_str(), solve_input.c_str(), NULL);
+        return -1;
+    }
+    vector<array<int,2> > servo;
+    give_back_sequence(output.c_str(),servo);
+    print_servo(servo);
     return 0;
 }
