@@ -81,3 +81,12 @@ the cube looks like this
  
  e.g. R U R’ U R U2 R’ U
 
+
+ ## References
+ https://stacks.stanford.edu/file/druid:yj296hj2790/Ng_Rubiks%20Cube_Reconstruction_from_Images.pdf
+
+ https://stacks.stanford.edu/file/druid:yj296hj2790/Ng_Rubiks%20Cube_Reconstruction_from_Images.pdf
+
+ https://www.researchgate.net/publication/234829781_Rubik's_cube_reconstruction_from_single_view_for_Service_robots
+
+ http://www.wolfram.com/broadcast/video.php?c=97&v=43
