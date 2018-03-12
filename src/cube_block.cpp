@@ -1,4 +1,4 @@
-#include "cube_block.h"
+#include "../include/cube_block.h"
 
 void findFrontKeyBlock(std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners,int &core_square_index){
     cv::Point2f down_right=corners[0][3];

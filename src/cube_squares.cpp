@@ -1,4 +1,4 @@
-#include "cube_squares.h"
+#include "../include/cube_squares.h"
 
 using namespace cv;
 

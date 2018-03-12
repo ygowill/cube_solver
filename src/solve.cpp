@@ -1,9 +1,9 @@
-#include "cube_data.h"
-#include "cube_block.h"
-#include "cube_corner.h"
-#include "cube_squares.h"
-#include "cube_bound.h"
-#include "color_operation.h"
+#include "../include/cube_data.h"
+#include "../include/cube_block.h"
+#include "../include/cube_corner.h"
+#include "../include/cube_squares.h"
+#include "../include/cube_bound.h"
+#include "../include/color_operation.h"
 
 using namespace cv;
 using namespace std;
@@ -51,9 +51,9 @@ int main(){
         //drawSquares(frame, front_squares);
         //drawSquares(frame, right_squares);
         //drawSquares(frame, down_squares);
-        printf("sum: %ld,front: %ld\n",squares.size(),front_squares.size());
-        printf("sum: %ld,right: %ld\n",squares.size(),right_squares.size());
-        printf("sum: %ld,down: %ld\n",squares.size(),down_squares.size());
+        printf("sum: %ld,front:\t%ld\n",squares.size(),front_squares.size());
+        printf("sum: %ld,right:\t%ld\n",squares.size(),right_squares.size());
+        printf("sum: %ld,down:\t%ld\n",squares.size(),down_squares.size());
         printf("finishing detcetion...\n");
         //addWeighted(mean_frame,0.9,frame,0.1,0,mean_frame);
         mean_frame = frame;

@@ -1,4 +1,4 @@
-#include "cube_corner.h"
+#include "../include/cube_corner.h"
 
 void findFrontCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
     cv::Point2f top_left;
