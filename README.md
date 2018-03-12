@@ -1,4 +1,6 @@
 I'm still working on this project _(:з」∠)_
+
+After I finish this competition, I'm going to use another branch to do the pure vision part and use only two pictures to solve the cube.
 ## Introduction to this project
 This is a small project for a vision and control competition, which use opencv and raspberry pi to do the vision part and add another pca9685 to control 6 servo to rotate the cube.
 
