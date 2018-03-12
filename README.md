@@ -1,7 +1,28 @@
 I'm still working on this project _(:з」∠)_
+## Introduction to this project
+This is a small project for a vision and control competition, which use opencv and raspberry pi to do the vision part and add another pca9685 to control 6 servo to rotate the cube.
 
-use a kociemba binary file from https://github.com/muodov/kociemba
 
+
+## About the vision part
+Because of the limited funds and the mechanical structure, I have to use two webcams to do the cube recognition. So I have to detect 3 faces of the cube at one time.
+
+I use 3s video to get a stable result of recognition.For every frame, I use *GaussianBlur()* to get rid of the noise and use *Canny()* to detect the edges.
+
+Next I use *findCounters()* and *approxPolyDP()* to get the square counters.For each square counter, I use the angle of its longest diagonal to define which face it belongs to. And there is also a trickey function in it.Because the cam and the cube are settled so I can use the stable postion of the squares in the unstable frame and get the most detaild square counter data.
+
+For each face, there is a key sticker, which belongs to three faces of the corner block.I use the postion data of every stickers to define where the corner bolck is.After I find the key block.I can use the data of it to map the whole cube and find the bound of each face.I use *warpPerspective()* to flatten mapping and get the imagess for three faces.
+
+After that, I write a simple color reduce funtion just for this program. I turn the image into the HSV color space and use its Hue value and the Saturation value to define the color of each sticker. These color data are stored in a sticker array and will be combined to get all the color position in a string.So that I can use the two phase algorithm to solve the cube.
+
+
+
+## About the algorithm to solve the cube
+I use a kociemba binary file from https://github.com/muodov/kociemba
+
+
+
+## About the cube
 the cube looks like this
 
 
@@ -27,7 +48,8 @@ the cube looks like this
                  |*D7**D8**D9*|
                  |************|
 
- and the input order is
+ and the input order is:
+ 
  U1, U2, U3, U4, U5, U6, U7, U8, U9,
  U refered to servo 1
  
@@ -48,7 +70,6 @@ the cube looks like this
  
 
  Solution string consists of space-separated parts, each of them represents a single move:
-
 
  A single letter by itself means to turn that face clockwise 90 degrees.
  
