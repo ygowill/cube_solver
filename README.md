@@ -16,7 +16,7 @@ I use 3s video to get a stable result of recognition.For every frame, I use *Gau
 
 ![GaussianBlur image](./imgs/GaussianBlur.png)
 
-![Canny image](./imgs/Canny\ result.png)
+![Canny image](./imgs/CannyResult.png)
 
 Next I use *findCounters()* and *approxPolyDP()* to get the square counters.For each square counter, I use the angle of its longest diagonal to define which face it belongs to. And there is also a trickey function in it.Because the cam and the cube are settled so I can use the stable postion of the squares in the unstable frame and get the most detaild square counter data.
 
@@ -24,11 +24,11 @@ Next I use *findCounters()* and *approxPolyDP()* to get the square counters.For 
 
 For each face, there is a key sticker, which belongs to three faces of the corner block.I use the postion data of every stickers to define where the corner bolck is.After I find the key block.I can use the data of it to map the whole cube and find the bound of each face.I use *warpPerspective()* to flatten mapping and get the imagess for three faces.
 
-![roi image](./imgs/front\ roi.png)
+![roi image](./imgs/FrontRoi.png)
 
-![roi image](./imgs/right\ roi.png)
+![roi image](./imgs/RightRoi.png)
 
-![roi image](./imgs/down\ roi.png)
+![roi image](./imgs/DownRoi.png)
 
 After that, I write a simple color reduce funtion just for this program. I turn the image into the HSV color space and use its Hue value and the Saturation value to define the color of each sticker. These color data are stored in a sticker array and will be combined to get all the color position in a string.So that I can use the two phase algorithm to solve the cube.
 
