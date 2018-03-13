@@ -24,11 +24,11 @@ Next I use *findCounters()* and *approxPolyDP()* to get the square counters.For 
 
 For each face, there is a key sticker, which belongs to three faces of the corner block.I use the postion data of every stickers to define where the corner bolck is.After I find the key block.I can use the data of it to map the whole cube and find the bound of each face.I use *warpPerspective()* to flatten mapping and get the imagess for three faces.
 
+![key block](./imgs/KeyBlock.png)
+
+![cube bound](./imgs/CubeBound.png)
+
 ![roi image](./imgs/FrontRoi.png)
-
-![roi image](./imgs/RightRoi.png)
-
-![roi image](./imgs/DownRoi.png)
 
 After that, I write a simple color reduce funtion just for this program. I turn the image into the HSV color space and use its Hue value and the Saturation value to define the color of each sticker. These color data are stored in a sticker array and will be combined to get all the color position in a string.So that I can use the two phase algorithm to solve the cube.
 
