@@ -60,6 +60,7 @@ int main(){
         printf("finishing detcetion...\n");
         //addWeighted(mean_frame,0.9,frame,0.1,0,mean_frame);
         mean_frame = frame;
+        //imshow("squares",mean_frame);
 
         /*stop = time(NULL);
         if(stop - start>3){
@@ -88,16 +89,16 @@ int main(){
     findDownKeyBlock(d_corners,d_index);
 
     /*for(int i=0;i<4;i++){
-        circle(frame,Point((int)f_corners[f_index][i].x,(int)f_corners[f_index][i].y),5,Scalar(0,0,0),3);
-        circle(frame,Point((int)r_corners[r_index][i].x,(int)r_corners[r_index][i].y),5,Scalar(0,0,0),3);
-        circle(frame,Point((int)d_corners[d_index][i].x,(int)d_corners[d_index][i].y),5,Scalar(0,0,0),3);
-        //circle(frame,Point((int)front_corner[i].x,(int)front_corner[i].y),5,Scalar(0,255,255),3);
-        //circle(frame,Point((int)right_corner[i].x,(int)right_corner[i].y),5,Scalar(0,255,255),3);
-        //circle(frame,Point((int)down_corner[i].x,(int)down_corner[i].y),5,Scalar(0,255,255),3);
+        //circle(frame,Point((int)f_corners[f_index][i].x,(int)f_corners[f_index][i].y),5,Scalar(0,0,0),3);
+        //circle(frame,Point((int)r_corners[r_index][i].x,(int)r_corners[r_index][i].y),5,Scalar(0,0,0),3);
+        //circle(frame,Point((int)d_corners[d_index][i].x,(int)d_corners[d_index][i].y),5,Scalar(0,0,0),3);
+        circle(frame,Point((int)front_corner[i].x,(int)front_corner[i].y),5,Scalar(0,255,255),3);
+        circle(frame,Point((int)right_corner[i].x,(int)right_corner[i].y),5,Scalar(0,255,255),3);
+        circle(frame,Point((int)down_corner[i].x,(int)down_corner[i].y),5,Scalar(0,255,255),3);
         //printf("(%d,%d) ",(int)front_corner[i].x,(int)front_corner[i].y);
         //printf("(%d,%d) ",(int)f_corners[index][i].x,(int)f_corners[index][i].y);
-    }*/
-    //imshow("Rubik's Detection -ygowill", frame);
+    }
+    imshow("Rubik's Detection -ygowill", frame);*/
 
     Mat front_m = getPerspectiveTransform(front_corner.data(),pts_dst);
     Mat front_image;
@@ -116,6 +117,19 @@ int main(){
     //imshow("roi down",roi_down);
     printf("processing done...\n");
 
+
+    Point2f test[] = {
+        reMapBound(roi_front.clone()),
+        Point(PICSIZE,0),
+        Point(0,PICSIZE) ,
+        Point(PICSIZE,PICSIZE)
+    };
+    front_m = getPerspectiveTransform(test,pts_dst);
+    warpPerspective(roi_front,roi_front,front_m,roi_front.size());
+    imshow("roi front",roi_front);
+
+
+
     /*for(int i=0;i<f_corners.size();i++){
         circle(frame,Point((int)f_corners[i][0].x,(int)f_corners[i][0].y),5,Scalar(255,255,255),5);
         circle(frame,Point((int)f_corners[i][1].x,(int)f_corners[i][1].y),5,Scalar(0,0,255),5);
@@ -133,13 +147,14 @@ int main(){
         circle(frame,Point((int)d_corners[i][3].x,(int)d_corners[i][3].y),5,Scalar(255,0,255),5);
     }*/
     //imshow("Rubik's Detection -ygowill", frame);
+    //waitKey(30000);
 
-    Mat down_color;
-    cube_color_reduce(roi_down,down_color);
-    imshow("reduced color",down_color);
-    get_cube_color(down_color,d_stickers);
-    Mat test_roi=down_color(Rect(150,50,50,50));
-    //imshow("test roi",test_roi);
+    Mat front_color;
+    cube_color_reduce(roi_front,front_color);
+    imshow("reduced color",front_color);
+    get_cube_color(front_color,f_stickers);
+    Mat test_roi=front_color(Rect(150,50,50,50));
+    imshow("test roi",test_roi);
     printf("color: %c\n",get_block_color(test_roi));
 
     waitKey(30);
@@ -151,7 +166,7 @@ int main(){
     }
 
     //TODO add another camera data and combine the two frame data together
-    string solve_input;
+    /*string solve_input;
     string file_path="../res/kociemba";
     string file_name="kociemba";
     string output="../res/sequence.txt";
@@ -166,6 +181,6 @@ int main(){
     }
     vector<array<int,2> > servo;
     give_back_sequence(output.c_str(),servo);
-    print_servo(servo);
+    print_servo(servo);*/
     return 0;
 }

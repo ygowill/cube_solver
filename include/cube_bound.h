@@ -8,6 +8,9 @@
 
 void number_signal(cv::Point2f src,cv::Point2f dst,int sig[]);
 void findBound(std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners,std::array<cv::Point2f,CUBESHAPE>& bounds,int mode);
+cv::Point reMapBound(cv::Mat roi_img);
+cv::Point cross_point(cv::Point p1,cv::Point p2,cv::Point p3,cv::Point p4);
+
 
 #endif //CUBE_SOLVER_CUBE_BOUND_H
 

@@ -31,10 +31,12 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
     imshow("color reduce result",reduced);*/
     cvtColor(image,gray0,COLOR_BGR2GRAY);
     GaussianBlur(gray0, gray0, Size(9,9), 0, 0);
+    //imshow("GaussianBlur result",gray0);
 
     //pyrMeanShiftFiltering(image,image,spatialRad,colorRad,maxPryLevel);
     //cvtColor(image,gray0,COLOR_BGR2GRAY);
     Canny(gray0,gray, 0, 30, 3);
+    //imshow("Canny result",gray);
     /*HoughLinesP(gray,lines,1,CV_PI/180,35,35,15);
 
     for (size_t i = 0; i < lines.size(); i++){
