@@ -41,11 +41,25 @@ For each face, there is a key sticker, which belongs to three faces of the corne
 
 
 * roi image
+
 ![roi image](./imgs/FrontRoi.png)
+
+
+* remapped image
+
+![roi image](./imgs/reMappedImage.png)
 
 
 After that, I write a simple color reduce funtion just for this program. I turn the image into the HSV color space and use its Hue value and the Saturation value to define the color of each sticker. These color data are stored in a sticker array and will be combined to get all the color position in a string.So that I can use the two phase algorithm to solve the cube.
 
+* color reduction
+
+![roi image](./imgs/ColorReducedResult.png)
+
+
+* recognize result
+
+![roi image](./imgs/ColorResult.png)
 
 
 ## About the algorithm to solve the cube
