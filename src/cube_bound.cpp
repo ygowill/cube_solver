@@ -18,14 +18,14 @@ void number_signal(cv::Point2f src,cv::Point2f dst,int sig[]){
     }
 }
 
-void findBound(std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners,std::array<cv::Point2f,CUBESHAPE>& bounds,int mode){
+void findBound(std::vector<std::array<cv::Point2f,4> >& corners,std::array<cv::Point2f,4>& bounds,int mode){
     int core_square_index=0;
     switch(mode){
-        case 3:findFrontKeyBlock(corners,core_square_index);
+        case 1:findFrontKeyBlock(corners,core_square_index);
             break;
-        case 2:findRightKeyBlock(corners,core_square_index);
+        case 0:findRightKeyBlock(corners,core_square_index);
             break;
-        case 1:findDownKeyBlock(corners,core_square_index);
+        case 2:findDownKeyBlock(corners,core_square_index);
             break;
         default: exit(0);
     }
@@ -41,43 +41,43 @@ void findBound(std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners,std::arr
 
     int sig[2];
     switch(mode){
-        case 3:
-            number_signal(keyCorner[3],keyCorner[1],sig);
-            bounds[1].x=keyCorner[1].x+sig[0]*(CUBESHAPE-1)*(key_dx+FRONT_DISTANCE_COMPENSATION_X);
-            bounds[1].y=keyCorner[1].y+sig[1]*(CUBESHAPE-1)*(key_y+FRONT_DISTANCE_COMPENSATION_Y);
-            bounds[3].x=keyCorner[3].x;
-            bounds[3].y=keyCorner[3].y;
-            number_signal(keyCorner[3],keyCorner[2],sig);
-            bounds[2].x=keyCorner[2].x+sig[0]*(CUBESHAPE-1)*(key_x+FRONT_DISTANCE_COMPENSATION_X);
-            bounds[2].y=keyCorner[2].y+sig[1]*(CUBESHAPE-1)*(key_dy+FRONT_DISTANCE_COMPENSATION_Y);
+        case 0:
+            number_signal(keyCorner[0],keyCorner[2],sig);
+            bounds[2].x=keyCorner[2].x+sig[0]*(CUBESHAPE-1)*(key_dx+RIGHT_DISTANCE_COMPENSATION_X);
+            bounds[2].y=keyCorner[2].y+sig[1]*(CUBESHAPE-1)*(key_y+RIGHT_DISTANCE_COMPENSATION_Y);
+            bounds[0].x=keyCorner[0].x;
+            bounds[0].y=keyCorner[0].y;
+            number_signal(keyCorner[0],keyCorner[1],sig);
+            bounds[1].x=keyCorner[1].x+sig[0]*(CUBESHAPE-1)*(key_x+RIGHT_DISTANCE_COMPENSATION_X);
+            bounds[1].y=keyCorner[1].y+sig[1]*(CUBESHAPE-1)*(key_dy+RIGHT_DISTANCE_COMPENSATION_Y);
 
-            bounds[0].x=bounds[1].x+bounds[2].x-keyCorner[3].x+FRONT_DISTANCE_COMPENSATION_XY_X;
-            bounds[0].y=bounds[1].y+bounds[2].y-keyCorner[3].y+FRONT_DISTANCE_COMPENSATION_XY_Y;
+            bounds[3].x=bounds[1].x+bounds[2].x-keyCorner[0].x+RIGHT_DISTANCE_COMPENSATION_XY_X;
+            bounds[3].y=bounds[1].y+bounds[2].y-keyCorner[0].y+RIGHT_DISTANCE_COMPENSATION_XY_Y;
             break;
         case 2:
             number_signal(keyCorner[2],keyCorner[0],sig);
-            bounds[0].x=keyCorner[0].x+sig[0]*(CUBESHAPE-1)*(key_dx+RIGHT_DISTANCE_COMPENSATION_X);
-            bounds[0].y=keyCorner[0].y+sig[1]*(CUBESHAPE-1)*(key_y+RIGHT_DISTANCE_COMPENSATION_Y);
+            bounds[0].x=keyCorner[0].x+sig[0]*(CUBESHAPE-1)*(key_dx+DOWN_DISTANCE_COMPENSATION_X);
+            bounds[0].y=keyCorner[0].y+sig[1]*(CUBESHAPE-1)*(key_y+DOWN_DISTANCE_COMPENSATION_Y);
             bounds[2].x=keyCorner[2].x;
             bounds[2].y=keyCorner[2].y;
             number_signal(keyCorner[2],keyCorner[3],sig);
-            bounds[3].x=keyCorner[3].x+sig[0]*(CUBESHAPE-1)*(key_x+RIGHT_DISTANCE_COMPENSATION_X);
-            bounds[3].y=keyCorner[3].y+sig[1]*(CUBESHAPE-1)*(key_dy+RIGHT_DISTANCE_COMPENSATION_Y);
-
-            bounds[1].x=bounds[0].x+bounds[3].x-keyCorner[2].x+RIGHT_DISTANCE_COMPENSATION_XY_X;
-            bounds[1].y=bounds[0].y+bounds[3].y-keyCorner[2].y+RIGHT_DISTANCE_COMPENSATION_XY_Y;
-            break;
-        case 1:number_signal(keyCorner[1],keyCorner[0],sig);
-            bounds[0].x=keyCorner[0].x+sig[0]*(CUBESHAPE-1)*(key_dx+DOWN_DISTANCE_COMPENSATION_X);
-            bounds[0].y=keyCorner[0].y+sig[1]*(CUBESHAPE-1)*(key_y+DOWN_DISTANCE_COMPENSATION_Y);
-            bounds[1].x=keyCorner[1].x;
-            bounds[1].y=keyCorner[1].y;
-            number_signal(keyCorner[1],keyCorner[3],sig);
             bounds[3].x=keyCorner[3].x+sig[0]*(CUBESHAPE-1)*(key_x+DOWN_DISTANCE_COMPENSATION_X);
             bounds[3].y=keyCorner[3].y+sig[1]*(CUBESHAPE-1)*(key_dy+DOWN_DISTANCE_COMPENSATION_Y);
 
-            bounds[2].x=bounds[0].x+bounds[3].x-keyCorner[1].x+DOWN_DISTANCE_COMPENSATION_XY_X;
-            bounds[2].y=bounds[0].y+bounds[3].y-keyCorner[1].y+DOWN_DISTANCE_COMPENSATION_XY_Y;
+            bounds[1].x=bounds[0].x+bounds[3].x-keyCorner[2].x+DOWN_DISTANCE_COMPENSATION_XY_X;
+            bounds[1].y=bounds[0].y+bounds[3].y-keyCorner[2].y+DOWN_DISTANCE_COMPENSATION_XY_Y;
+            break;
+        case 1:number_signal(keyCorner[1],keyCorner[3],sig);
+            bounds[3].x=keyCorner[3].x+sig[0]*(CUBESHAPE-1)*(key_dx+FRONT_DISTANCE_COMPENSATION_X);
+            bounds[3].y=keyCorner[3].y+sig[1]*(CUBESHAPE-1)*(key_y+FRONT_DISTANCE_COMPENSATION_Y);
+            bounds[1].x=keyCorner[1].x;
+            bounds[1].y=keyCorner[1].y;
+            number_signal(keyCorner[1],keyCorner[0],sig);
+            bounds[0].x=keyCorner[0].x+sig[0]*(CUBESHAPE-1)*(key_x+FRONT_DISTANCE_COMPENSATION_X);
+            bounds[0].y=keyCorner[0].y+sig[1]*(CUBESHAPE-1)*(key_dy+FRONT_DISTANCE_COMPENSATION_X);
+
+            bounds[2].x=bounds[0].x+bounds[3].x-keyCorner[1].x+FRONT_DISTANCE_COMPENSATION_XY_X;
+            bounds[2].y=bounds[0].y+bounds[3].y-keyCorner[1].y+FRONT_DISTANCE_COMPENSATION_XY_Y;
             break;
     }
 }

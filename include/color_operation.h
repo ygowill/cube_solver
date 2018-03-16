@@ -8,7 +8,7 @@
 
 void cube_color_reduce(cv::Mat& src, cv::Mat& dst);
 void my_kmeans(cv::Mat& src,cv::Mat& dst,int clusterCount,int attempts);
-void get_cube_color(cv::Mat& roi,std::array<char, BLOCKSIZE> color);
+void get_cube_color(cv::Mat& roi,std::array<char, BLOCKSIZE>& color);
 char get_block_color(cv::Mat& roi);
 
 #endif //CUBE_SOLVER_COLOR_OPERATION_H

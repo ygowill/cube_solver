@@ -83,7 +83,7 @@ void my_kmeans(cv::Mat& src, cv::Mat& dst,int clusterCount,int attempts){
     dst = new_image;
 }
 
-void get_cube_color(Mat& roi,std::array<char, BLOCKSIZE> color){
+void get_cube_color(Mat& roi,std::array<char, BLOCKSIZE>& color){
     for(int i=0;i<CUBESHAPE;i++){
         for(int j=0;j<CUBESHAPE;j++){
             Mat tmp_roi=roi(Rect(j*STICKERSIZE,i*STICKERSIZE,STICKERSIZE,STICKERSIZE));

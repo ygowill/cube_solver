@@ -37,6 +37,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
     //cvtColor(image,gray0,COLOR_BGR2GRAY);
     Canny(gray0,gray, 0, 30, 3);
     //imshow("Canny result",gray);
+    //waitKey(30000);
     /*HoughLinesP(gray,lines,1,CV_PI/180,35,35,15);
 
     for (size_t i = 0; i < lines.size(); i++){
@@ -64,7 +65,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
         // area may be positive or negative - in accordance with the
         // contour orientation
         if( approx.size() == 4 &&
-            fabs(contourArea(Mat(approx))) > 1000 &&
+            fabs(contourArea(Mat(approx))) > 300 &&
             isContourConvex(Mat(approx)) ){
             squares.push_back(approx);
             int dx1=approx[0].x-approx[2].x;
@@ -72,7 +73,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
             int dx2=approx[1].x-approx[3].x;
             int dy2=approx[1].y-approx[3].y;
             if(pow(dx1,2)+pow(dy1,2) >= pow(dx2,2)+pow(dy2,2) ){
-                if(dy1/dx1 < MAXTAN  && dy1/dx1 > 1/MAXTAN){
+                if(dy1/dx1 > -MAXTAN && dy1/dx1 < -1/MAXTAN){
                     if(!checkExist(approx,right_squares,MAXRANGE)){
                         if(right_squares.size()>BLOCKSIZE-1){
                             right_squares.clear();
@@ -80,7 +81,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
                         right_squares.push_back(approx);
                     }
                 }
-                else if(dy1/dx1 > -MAXTAN && dy1/dx1 < -1/MAXTAN){
+                else if(dy1/dx1 < MAXTAN  && dy1/dx1 > 1/MAXTAN){
                     if(!checkExist(approx,front_squares,MAXRANGE)){
                         if(front_squares.size()>BLOCKSIZE-1){
                             front_squares.clear();
@@ -98,7 +99,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
                 }
             }
             else{
-                if(dy2/dx2 < MAXTAN  && dy2/dx2 > 1/MAXTAN){
+                if(dy2/dx2 > -MAXTAN && dy2/dx2 < -1/MAXTAN){
                     if(!checkExist(approx,front_squares,MAXRANGE)){
                         if(front_squares.size()>BLOCKSIZE-1){
                             front_squares.clear();
@@ -106,7 +107,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
                         front_squares.push_back(approx);
                     }
                 }
-                else if(dy2/dx2 > -MAXTAN && dy2/dx2 < -1/MAXTAN){
+                else if(dy2/dx2 < MAXTAN  && dy2/dx2 > 1/MAXTAN){
                     if(!checkExist(approx,right_squares,MAXRANGE)){
                         if(right_squares.size()>BLOCKSIZE-1){
                             right_squares.clear();

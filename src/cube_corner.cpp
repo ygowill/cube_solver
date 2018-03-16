@@ -1,11 +1,11 @@
 #include "../include/cube_corner.h"
 
-void findFrontCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
+void findRightCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,4> >& corners){
     cv::Point2f top_left;
     cv::Point2f top_right;
     cv::Point2f down_left;
     cv::Point2f down_right;
-    std::array<cv::Point2f,CUBESHAPE> tmpCorners;
+    std::array<cv::Point2f,4> tmpCorners;
 
     for(int i=0;i<squares.size();i++){
         top_left=squares[i][0];
@@ -57,12 +57,12 @@ void findFrontCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<
     }
 }
 
-void findRightCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
+void findFrontCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,4> >& corners){
     cv::Point2f top_left;
     cv::Point2f top_right;
     cv::Point2f down_left;
     cv::Point2f down_right;
-    std::array<cv::Point2f,CUBESHAPE> tmpCorners;
+    std::array<cv::Point2f,4> tmpCorners;
 
     for(int i=0;i<squares.size();i++){
         top_left=squares[i][0];
@@ -114,12 +114,12 @@ void findRightCorner(std::vector<std::vector<cv::Point> >& squares, std::vector<
     }
 }
 
-void findDownCorner(std::vector< std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,CUBESHAPE> >& corners){
+void findDownCorner(std::vector< std::vector<cv::Point> >& squares, std::vector<std::array<cv::Point2f,4> >& corners){
     cv::Point2f top_left;
     cv::Point2f top_right;
     cv::Point2f down_left;
     cv::Point2f down_right;
-    std::array<cv::Point2f,CUBESHAPE> tmpCorners;
+    std::array<cv::Point2f,4> tmpCorners;
 
     for(int i=0;i<squares.size();i++){
         top_left=squares[i][0];
