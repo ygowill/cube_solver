@@ -26,7 +26,7 @@ void cube_color_reduce(cv::Mat& src, cv::Mat& dst){
         }
 
         //detect white and set the saturation value
-        if(((*colorit)[1]>=0 && (*colorit)[1]<=10) && ((*colorit)[2]>=240 && (*colorit)[2]<=255)){
+        if(((*colorit)[1]>=0 && (*colorit)[1]<=10) && ((*colorit)[2]>=245 && (*colorit)[2]<=255)){
             (*colorit)[1]=WHITE_S;
         }
         else{

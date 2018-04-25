@@ -65,6 +65,8 @@ After that, I write a simple color reduce funtion just for this program. I turn 
 ## About the algorithm to solve the cube
 I use a kociemba binary file from https://github.com/muodov/kociemba
 
+Example：DRLUUBFBRBLURRLRUBLRDDFDLFUFUFFDBRDUBRUFLLFDDBFLUBLRBD
+Example output: D2 R' D' F2 B D R2 D2 R' F2 D' F2 U' B2 L2 U2 D R2 U
 
 
 ## About the cube

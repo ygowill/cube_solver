@@ -2,6 +2,7 @@
 
 #include "opencv2/imgproc.hpp"
 #include "opencv2/highgui.hpp"
+
 const int MAXRANGE = 1000;
 const int MAXTAN = 3;
 const int PICSIZE = 200;
@@ -31,6 +32,10 @@ const int YELLOW = 31;
 const int GREEN = 75;
 const int BLUE = 125;
 const int WHITE_S = 0;
+
+
+#ifndef CUBE_SOLVER_CUBE_DATA
+#define CUBE_SOLVER_CUBE_DATA
 
 extern std::vector<std::vector<cv::Point> > front_squares;
 extern std::array<cv::Point2f,4> front_corner;
@@ -62,3 +67,27 @@ extern cv::Point2f f_remap[];
 extern cv::Point2f r_remap[];
 extern cv::Point2f d_remap[];
 
+#endif //CUBE_SOLVER_CUBE_DATA
+
+struct cube_struct{
+  std::vector<std::vector<cv::Point> > front_squares;
+  std::array<cv::Point2f,4> front_corner;
+  std::vector<std::array<cv::Point2f,4> > f_corners;
+  std::array<char, BLOCKSIZE>f_stickers;
+  std::vector<std::vector<cv::Point> > down_squares;
+  std::array<cv::Point2f,4> down_corner;
+  std::vector<std::array<cv::Point2f,4> > d_corners;
+  std::array<char, BLOCKSIZE>d_stickers;
+  std::vector<std::vector<cv::Point> > right_squares;
+  std::array<cv::Point2f,4> right_corner;
+  std::vector<std::array<cv::Point2f,4> > r_corners;
+  std::array<char, BLOCKSIZE>r_stickers;
+  cv::Point2f pts_dst[];
+};
+
+typedef struct cube_struct Cube;
+
+const std::string sequence_path="../res/sequence.txt";
+const std::string file_path="../res/kociemba";
+const std::string file_name="kociemba";
+const std::string output="../res/output.txt";

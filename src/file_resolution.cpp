@@ -6,6 +6,8 @@ using namespace std;
 
 const vector<char> keyCH={'U','R','F','D','L','B',' ','\'','2'};
 
+extern int servo_data[6][5];
+
 bool in_table(char input,vector<char> table){
     for(int i=0;i<table.size();i++){
         if(table.data()[i]==input){
@@ -74,4 +76,44 @@ void print_servo(std::vector<std::array<int,2> > servo){
     for(int i=0;i<servo.size();i++){
         printf("servo: %d  angle:%d \n",servo.at(i)[0],servo.at(i)[1]);
     }
+}
+
+void store_result(const char* file_path,array<char, BLOCKSIZE>& stickers){
+    FILE* fd=fopen(file_path,"a");
+    if(fd==NULL){
+        printf("fail to open file.\n");
+        exit(1);
+    }
+    for(auto s:stickers){
+        char sticker=s;
+        switch (sticker){
+            case 'Y':sticker='D';
+                break;
+            case 'B':sticker='B';
+                break;
+            case 'O':sticker='L';
+                break;
+            case 'R':sticker='R';
+                break;
+            case 'W':sticker='U';
+                break;
+            case 'G':sticker='F';
+                break;
+            default:sticker='E';
+        }
+        fwrite(&sticker, sizeof(char),1,fd);
+    }
+    fclose(fd);
+}
+
+string read_file(const string file_path){
+    string output;
+    FILE* fp=fopen(file_path.c_str(),"r");
+    output.clear();
+    auto ch=(char)getc(fp);
+    while(ch!= EOF && ch!= '\n'){
+        output.push_back(ch);
+        ch=(char)getc(fp);
+    }
+    return output;
 }

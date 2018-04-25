@@ -30,7 +30,7 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
     colorReduce(image_clone,reduced,32);
     imshow("color reduce result",reduced);*/
     cvtColor(image,gray0,COLOR_BGR2GRAY);
-    GaussianBlur(gray0, gray0, Size(9,9), 0, 0);
+    GaussianBlur(gray0, gray0, Size(7,7), 0, 0);
     //imshow("GaussianBlur result",gray0);
 
     //pyrMeanShiftFiltering(image,image,spatialRad,colorRad,maxPryLevel);
