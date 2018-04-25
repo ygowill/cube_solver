@@ -22,4 +22,5 @@ void get_servo_sequence(int servo_stat[6],vector<array<int,2> >& servo_seq){
 
 void servo_run(vector<array<int,2> >& servo_seq){
 
+
 }
