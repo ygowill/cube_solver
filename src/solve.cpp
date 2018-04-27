@@ -1,8 +1,10 @@
 #include <zconf.h>
 #include <fcntl.h>
+#include <thread>
 #include "../include/cube_data.h"
 #include "../include/file_resolution.h"
 #include "../include/servo.h"
+#include "../include/video.h"
 
 using namespace cv;
 using namespace std;
@@ -39,14 +41,24 @@ cv::Point2f pts_dst[]={
     Point(PICSIZE,PICSIZE)
 };
 
-cv::Point2f f_remap[4];
-cv::Point2f r_remap[4];
-cv::Point2f d_remap[4];
-
 int main(){
-    //videoProcess(1);
-    //videoProcess(2);
-    //TODO add another camera data and combine the two frame data together
+    Cube cube1,cube2;
+    cube1.cameraID=1;
+    cube2.cameraID=2;
+    thread t1(videoProcess,cube1);
+    thread t2(videoProcess,cube2);
+    t1.join();
+    t2.join();
+
+
+    //TODO combine the two cube face color data together
+    store_result(sequence_path.c_str(),cube1.d_stickers);
+    store_result(sequence_path.c_str(),cube1.r_stickers);
+    store_result(sequence_path.c_str(),cube1.f_stickers);
+    store_result(sequence_path.c_str(),cube2.d_stickers);
+    store_result(sequence_path.c_str(),cube2.r_stickers);
+    store_result(sequence_path.c_str(),cube2.f_stickers);
+
     string solve_input,solve_output;
     solve_input=read_file(sequence_path);
     pid_t pid = fork() ;
@@ -58,6 +70,7 @@ int main(){
         execlp(file_path.c_str(), file_name.c_str(), solve_input.c_str(), NULL);
         return -1;
     }
+
     vector<array<int,2> > servo;
     give_back_sequence(output.c_str(),servo);
     //remove(sequence_path.c_str());
@@ -67,6 +80,8 @@ int main(){
     int servo_stat[6]={0};
     get_servo_sequence(servo_stat,servo);
     print_servo(servo);
+
+    servo_run(servo);
 
     return 0;
 }

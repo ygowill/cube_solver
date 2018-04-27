@@ -18,8 +18,7 @@ void drawSquares( Mat& image, const std::vector<std::vector<Point> >& squares ){
 
 // returns sequence of squares detected on the image.
 // the sequence is stored in the specified memory storage
-void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
-    squares.clear();
+void findSquares( const Mat& image, Cube& cube){
     Mat gray,gray0,color_gray,image_clone,reduced;
     std::vector<std::vector<Point> > contours;
 
@@ -30,12 +29,12 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
     colorReduce(image_clone,reduced,32);
     imshow("color reduce result",reduced);*/
     cvtColor(image,gray0,COLOR_BGR2GRAY);
-    GaussianBlur(gray0, gray0, Size(7,7), 0, 0);
+    GaussianBlur(gray0, gray0, Size(9,9), 0, 0);
     //imshow("GaussianBlur result",gray0);
 
     //pyrMeanShiftFiltering(image,image,spatialRad,colorRad,maxPryLevel);
     //cvtColor(image,gray0,COLOR_BGR2GRAY);
-    Canny(gray0,gray, 0, 30, 3);
+    Canny(gray0,gray, 10, 30);
     //imshow("Canny result",gray);
     //waitKey(30000);
     /*HoughLinesP(gray,lines,1,CV_PI/180,35,35,15);
@@ -67,60 +66,59 @@ void findSquares( const Mat& image, std::vector<std::vector<Point> >& squares){
         if( approx.size() == 4 &&
             fabs(contourArea(Mat(approx))) > 300 &&
             isContourConvex(Mat(approx)) ){
-            squares.push_back(approx);
             int dx1=approx[0].x-approx[2].x;
             int dy1=approx[0].y-approx[2].y;
             int dx2=approx[1].x-approx[3].x;
             int dy2=approx[1].y-approx[3].y;
             if(pow(dx1,2)+pow(dy1,2) >= pow(dx2,2)+pow(dy2,2) ){
                 if(dy1/dx1 > -MAXTAN && dy1/dx1 < -1/MAXTAN){
-                    if(!checkExist(approx,right_squares,MAXRANGE)){
-                        if(right_squares.size()>BLOCKSIZE-1){
-                            right_squares.clear();
+                    if(!checkExist(approx,cube.right_squares,MAXRANGE)){
+                        if(cube.right_squares.size()>BLOCKSIZE-1){
+                            cube.right_squares.clear();
                         }
-                        right_squares.push_back(approx);
+                        cube.right_squares.push_back(approx);
                     }
                 }
                 else if(dy1/dx1 < MAXTAN  && dy1/dx1 > 1/MAXTAN){
-                    if(!checkExist(approx,front_squares,MAXRANGE)){
-                        if(front_squares.size()>BLOCKSIZE-1){
-                            front_squares.clear();
+                    if(!checkExist(approx,cube.front_squares,MAXRANGE)){
+                        if(cube.front_squares.size()>BLOCKSIZE-1){
+                            cube.front_squares.clear();
                         }
-                        front_squares.push_back(approx);
+                        cube.front_squares.push_back(approx);
                     }
                 }
                 else{
-                    if(!checkExist(approx,down_squares,MAXRANGE)){
-                        if(down_squares.size()>BLOCKSIZE-1){
-                            down_squares.clear();
+                    if(!checkExist(approx,cube.down_squares,MAXRANGE)){
+                        if(cube.down_squares.size()>BLOCKSIZE-1){
+                            cube.down_squares.clear();
                         }
-                        down_squares.push_back(approx);
+                        cube.down_squares.push_back(approx);
                     }
                 }
             }
             else{
                 if(dy2/dx2 > -MAXTAN && dy2/dx2 < -1/MAXTAN){
-                    if(!checkExist(approx,front_squares,MAXRANGE)){
-                        if(front_squares.size()>BLOCKSIZE-1){
-                            front_squares.clear();
+                    if(!checkExist(approx,cube.front_squares,MAXRANGE)){
+                        if(cube.front_squares.size()>BLOCKSIZE-1){
+                            cube.front_squares.clear();
                         }
-                        front_squares.push_back(approx);
+                        cube.front_squares.push_back(approx);
                     }
                 }
                 else if(dy2/dx2 < MAXTAN  && dy2/dx2 > 1/MAXTAN){
-                    if(!checkExist(approx,right_squares,MAXRANGE)){
-                        if(right_squares.size()>BLOCKSIZE-1){
-                            right_squares.clear();
+                    if(!checkExist(approx,cube.right_squares,MAXRANGE)){
+                        if(cube.right_squares.size()>BLOCKSIZE-1){
+                            cube.right_squares.clear();
                         }
-                        right_squares.push_back(approx);
+                        cube.right_squares.push_back(approx);
                     }
                 }
                 else{
-                    if(!checkExist(approx,down_squares,MAXRANGE)){
-                        if(down_squares.size()>BLOCKSIZE-1){
-                            down_squares.clear();
+                    if(!checkExist(approx,cube.down_squares,MAXRANGE)){
+                        if(cube.down_squares.size()>BLOCKSIZE-1){
+                            cube.down_squares.clear();
                         }
-                        down_squares.push_back(approx);
+                        cube.down_squares.push_back(approx);
                     }
                 }
             }

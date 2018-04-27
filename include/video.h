@@ -7,4 +7,7 @@
 #include "../include/cube_bound.h"
 #include "../include/color_operation.h"
 #include "../include/file_resolution.h"
+
+void videoProcess(Cube& cube);
+
 #endif //CUBE_SOLVER_VIDEO_H

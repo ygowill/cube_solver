@@ -70,19 +70,22 @@ extern cv::Point2f d_remap[];
 #endif //CUBE_SOLVER_CUBE_DATA
 
 struct cube_struct{
+  int cameraID;
   std::vector<std::vector<cv::Point> > front_squares;
   std::array<cv::Point2f,4> front_corner;
   std::vector<std::array<cv::Point2f,4> > f_corners;
+  int f_index;
   std::array<char, BLOCKSIZE>f_stickers;
   std::vector<std::vector<cv::Point> > down_squares;
   std::array<cv::Point2f,4> down_corner;
   std::vector<std::array<cv::Point2f,4> > d_corners;
+  int d_index;
   std::array<char, BLOCKSIZE>d_stickers;
   std::vector<std::vector<cv::Point> > right_squares;
   std::array<cv::Point2f,4> right_corner;
   std::vector<std::array<cv::Point2f,4> > r_corners;
+  int r_index;
   std::array<char, BLOCKSIZE>r_stickers;
-  cv::Point2f pts_dst[];
 };
 
 typedef struct cube_struct Cube;
