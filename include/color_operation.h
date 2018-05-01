@@ -6,6 +6,7 @@
 #include <opencv2/core/core.hpp>
 #include "cube_data.h"
 
+void color_img_equlizehist(cv::Mat& src,cv::Mat& dst);
 void cube_color_reduce(cv::Mat& src, cv::Mat& dst);
 void my_kmeans(cv::Mat& src,cv::Mat& dst,int clusterCount,int attempts);
 void get_cube_color(cv::Mat& roi,std::array<char, BLOCKSIZE>& color);

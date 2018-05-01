@@ -1,9 +1,20 @@
 #include "../include/color_operation.h"
 
 using namespace cv;
+using namespace std;
+
+void color_img_equlizehist(Mat& src,Mat& dst){
+    vector<Mat> channels;
+    split(src,channels);
+    for(int i=0;i<channels.size();i++){
+        equalizeHist(channels.at(i),channels.at(i));
+    }
+    merge(channels,dst);
+}
 
 void cube_color_reduce(cv::Mat& src, cv::Mat& dst){
-    std::vector<Mat > channels;
+    //std::vector<Mat > channels;
+    color_img_equlizehist(src,src);
     Mat hsv_img;
     cvtColor(src,hsv_img,COLOR_BGR2HSV);
     MatIterator_<Vec3b> colorit, colorend;

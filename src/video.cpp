@@ -80,11 +80,11 @@ void videoProcess(Cube& cube){
     //waitKey(30000);
 
     /*for(int i=0;i<4;i++){
-        circle(mean_frame,Point((int)cube.f_corners[cube.f_index][i].x,(int)cube.f_corners[cube.f_index][i].y),5,Scalar(0,0,0),3);
-        circle(mean_frame,Point((int)cube.r_corners[cube.r_index][i].x,(int)cube.r_corners[cube.r_index][i].y),5,Scalar(0,0,0),3);
-        circle(mean_frame,Point((int)cube.d_corners[cube.d_index][i].x,(int)cube.d_corners[cube.d_index][i].y),5,Scalar(0,0,0),3);
-        circle(mean_frame,Point((int)cube.front_corner[i].x,(int)cube.front_corner[i].y),5,Scalar(0,255,255),3);
-        circle(mean_frame,Point((int)cube.right_corner[i].x,(int)cube.right_corner[i].y),5,Scalar(0,255,255),3);
+        //circle(mean_frame,Point((int)cube.f_corners[cube.f_index][i].x,(int)cube.f_corners[cube.f_index][i].y),5,Scalar(0,0,0),3);
+        //circle(mean_frame,Point((int)cube.r_corners[cube.r_index][i].x,(int)cube.r_corners[cube.r_index][i].y),5,Scalar(0,0,0),3);
+        //circle(mean_frame,Point((int)cube.d_corners[cube.d_index][i].x,(int)cube.d_corners[cube.d_index][i].y),5,Scalar(0,0,0),3);
+        //circle(mean_frame,Point((int)cube.front_corner[i].x,(int)cube.front_corner[i].y),5,Scalar(0,255,255),3);
+        //circle(mean_frame,Point((int)cube.right_corner[i].x,(int)cube.right_corner[i].y),5,Scalar(0,255,255),3);
         circle(mean_frame,Point((int)cube.down_corner[i].x,(int)cube.down_corner[i].y),5,Scalar(0,255,255),3);
         //printf("(%d,%d) ",(int)front_corner[i].x,(int)front_corner[i].y);
         //printf("(%d,%d) ",(int)f_corners[index][i].x,(int)f_corners[index][i].y);
@@ -102,17 +102,17 @@ void videoProcess(Cube& cube){
     Mat front_image;
     warpPerspective(mean_frame,front_image,front_m,mean_frame.size());
     Mat roi_front = front_image(Rect(0,0,PICSIZE,PICSIZE));
-    //imshow("roi front",roi_front);
+    imshow("roi front",roi_front);
     Mat right_m = getPerspectiveTransform(cube.right_corner.data(),pts_dst);
     Mat right_image;
     warpPerspective(mean_frame,right_image,right_m,mean_frame.size());
     Mat roi_right = right_image(Rect(0,0,PICSIZE,PICSIZE));
-    //imshow("roi right",roi_right);
+    imshow("roi right",roi_right);
     Mat down_m = getPerspectiveTransform(cube.down_corner.data(),pts_dst);
     Mat down_image;
     warpPerspective(mean_frame,down_image,down_m,mean_frame.size());
     Mat roi_down = down_image(Rect(0,0,PICSIZE,PICSIZE));
-    //imshow("roi down",roi_down);
+    imshow("roi down",roi_down);
     //waitKey(60000);
     printf("processing done...\n");
 
@@ -141,6 +141,7 @@ void videoProcess(Cube& cube){
     cube_color_reduce(roi_down,down_color);
     imshow("reduced down color",down_color);
     get_cube_color(down_color,cube.d_stickers);
+    waitKey(60000);
     //Mat test_roi=front_color(Rect(150,50,50,50));
     //imshow("test roi",test_roi);
     //printf("color: %c\n",get_block_color(test_roi));
